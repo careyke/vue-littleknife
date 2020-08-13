@@ -21,7 +21,7 @@ const getEntries = () => {
     htmlWebpackplugins.push(
       new HtmlWebpackPlugin({
         template: htmlTemplatePath,
-        filename: `${file}.html`,
+        filename: `${file}/index.html`,
         chunks: [file],
         inject: true,
         minify: {
@@ -42,8 +42,13 @@ const { entry, htmlWebpackplugins } = getEntries();
 module.exports = {
   entry: entry,
   output: {
-    path: path.resolve(__dirname, './dist'),
-    filename: isDev ? '[name].js' : '[name]_[chunkhash:8].js'
+    path: path.resolve(__dirname, '../dist'),
+    filename: isDev ? '[name]/app.js' : '[name]/app_[chunkhash:8].js',  // 热更新和chunkhash会产生冲突，开发环境不能使用
+    publicPath: ''
+  },
+  resolve: {
+    extensions: ['.js', '.vue'],
+    mainFields: ['main']
   },
   module: {
     rules: [
@@ -60,10 +65,28 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader',
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options:{
+              hmr: isDev
+            }
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: true,
+              import: true,
+              modules: {
+                localIdentName: '[name]_[local]_[hash:base64:4]'
+              },
+            }
+          },
           'postcss-loader'
         ]
+      },
+      {
+        test: /\.(png|jpe?g|gif|wav)$/,
+        use: ["url-loader?limit=10240&name=img/[hash:8].[name].[ext]"]
       }
     ]
   },
@@ -71,7 +94,7 @@ module.exports = {
     new VueLoaderPlugin(),
     ...htmlWebpackplugins,
     new MiniCssExtractPlugin({
-      filename: isDev ? '[name].css' : '[name]_[contenthash:8].css'
+      filename: isDev ? '[name]/app.css' : '[name]/app_[contenthash:8].css'
     })
   ]
 }

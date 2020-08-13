@@ -1,6 +1,7 @@
 import Vue from 'vue';
 
-const root = document.querySelector('#app');
-document.write('hello vue')
+import Main from './components/Main.vue';
 
-new Vue().$mount(root);
+new Vue({
+  render: (h) => h(Main)
+}).$mount('#app');
