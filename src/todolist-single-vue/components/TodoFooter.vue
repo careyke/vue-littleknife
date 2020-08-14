@@ -9,7 +9,7 @@
         @click="handleTabClick(item.value)"
       >{{item.label}}</span>
     </div>
-    <span :class="$style.right">Clear Completed</span>
+    <span :class="clearBtnClass" @click="handleClear">Clear Completed</span>
   </div>
 </template>
 
@@ -17,6 +17,8 @@
 export default {
   props: {
     undoNum: Number,
+    showClear: Boolean,
+    activeTab: Number,
   },
   data: function () {
     return {
@@ -25,7 +27,6 @@ export default {
         { label: "Active", value: 1 },
         { label: "Completed", value: 2 },
       ],
-      activeTab: 0,
     };
   },
   methods: {
@@ -36,7 +37,18 @@ export default {
       };
     },
     handleTabClick: function (value) {
-      this.activeTab = value;
+      this.$emit("switch-tab", value);
+    },
+    handleClear: function () {
+      this.$emit('clear-completed-todos');
+    },
+  },
+  computed: {
+    clearBtnClass: function () {
+      return {
+        [this.$style.right]: true,
+        [this.$style.rightActive]: this.showClear,
+      };
     },
   },
 };
@@ -45,20 +57,47 @@ export default {
 <style scoped module>
 .todoFooter {
   display: flex;
-  height: 40px;
+  height: 50px;
+  position: relative;
+  border-top: 1px solid #afafaf;
+  position: relative;
+}
+.todoFooter::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 50px;
+  overflow: hidden;
+  pointer-events: none;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 8px 0 -3px #f6f6f6,
+    0 9px 1px -3px rgba(0, 0, 0, 0.2), 0 16px 0 -6px #f6f6f6,
+    0 17px 2px -6px rgba(0, 0, 0, 0.2);
 }
 .left {
   display: flex;
   padding: 0 8px;
   align-items: center;
+  flex-shrink: 0;
 }
 .right {
-  display: flex;
+  display: none;
   padding: 0 8px;
   align-items: center;
   cursor: pointer;
+  width: 120px;
+  justify-content: center;
+  flex-shrink: 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
 }
-.right:hover{
+.rightActive {
+  display: flex;
+}
+.right:hover {
   color: rgba(175, 47, 47);
 }
 .center {
@@ -66,6 +105,7 @@ export default {
   flex-grow: 1;
   align-items: center;
   justify-content: center;
+  margin-right: 120px;
 }
 .tabItem {
   padding: 4px 8px;

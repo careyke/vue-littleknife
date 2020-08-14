@@ -1,32 +1,50 @@
 <template>
   <div :class="$style.item">
-    <div :class="iconClass" />
-    <div :class="textClass">{{text}}</div>
+    <div :class="iconClass" @click="handleComplete" />
+    <div :class="textClass">{{todo.text}}</div>
     <div :class="$style.close">
-      <img src="../../images/close.png"/>
+      <img :src="closeImg" @click="handleDelete" />
     </div>
   </div>
 </template>
 
 <script>
+import closeImg from "../../images/close.png";
+
 export default {
-  props: {
-    text: String,
-    id: Number,
-    completed: Boolean,
+  // props: {
+  //   // text: String,
+  //   // id: Number,
+  //   // completed: Boolean,
+  //   todo
+  // },
+  props: ["todo"],
+  data: function () {
+    return {
+      closeImg: closeImg,
+    };
   },
   computed: {
-    iconClass: () => {
+    iconClass: function () {
+      // 不能使用箭头函数，感觉是运行时给函数绑定了this 但是箭头函数式不生效的
       return {
         [this.$style.itemIcon]: true,
-        [this.$style.itemIconChecked]: props.completed,
+        [this.$style.itemIconChecked]: this.todo.completed,
       };
     },
-    textClass: () => {
+    textClass: function () {
       return {
         [this.$style.itemText]: true,
-        [this.$style.itemTextChecked]: props.completed,
-      }
+        [this.$style.itemTextChecked]: this.todo.completed,
+      };
+    },
+  },
+  methods: {
+    handleComplete: function () {
+      this.$emit("complete-todo", this.todo);
+    },
+    handleDelete: function () {
+      this.$emit("delete-todo", this.todo.id);
     },
   },
 };
@@ -35,14 +53,20 @@ export default {
 <style scoped module>
 .item {
   display: flex;
-  border-bottom: 1px solid #262626;
+  border-bottom: 1px solid #afafaf;
+  height: 50px;
+}
+.item:hover img {
+  display: inline-block !important;
 }
 .itemIcon {
   display: flex;
   background-image: url("../../images/check.png");
   background-position: center center;
-  width: 40px;
+  background-repeat: no-repeat;
+  width: 50px;
   cursor: pointer;
+  flex-shrink: 0;
 }
 .itemIconChecked {
   background-image: url("../../images/checked.png");
@@ -50,21 +74,22 @@ export default {
 .itemText {
   display: flex;
   align-items: center;
+  font-size: 16px;
+  flex-grow: 1;
 }
 .itemTextChecked {
   text-decoration: line-through;
   color: #d9d9d9;
 }
-.close{
+.close {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 40px;
+  width: 50px;
+  cursor: pointer;
+  flex-shrink: 0;
 }
-.close > img{
+.close > img {
   display: none;
-}
-.close:hover > img{
-  display: inline-block
 }
 </style>
