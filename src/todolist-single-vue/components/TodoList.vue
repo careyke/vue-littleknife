@@ -89,12 +89,12 @@ export default {
       // });
       todo.completed = !todo.completed;
     },
-    toggleAllCompleteTodo: function () {
+    toggleAllCompleteTodo: function (completed) {
       // this.todos = this.todos.map((todo) => {
       //   return { ...todo, completed:!this.allCompleted };
       // });
       this.todos.forEach((todo)=>{
-        todo.completed = !this.allCompleted;
+        todo.completed = completed;
       });
     },
     clearCompletedTodos: function () {

@@ -16,33 +16,33 @@
 export default {
   props: {
     allCompleted: Boolean,
-    todoCount: Number,
+    todoCount: Number
   },
-  data: function () {
+  data: function() {
     return {
-      text: "",
+      text: ""
     };
   },
   computed: {
-    allCompletedClass: function () {
+    allCompletedClass: function() {
       return {
         [this.$style.itemIcon]: true,
         [this.$style.itemIconChecked]: this.allCompleted,
         [this.$style.itemIconHide]: this.todoCount === 0
       };
-    },
+    }
   },
   methods: {
-    handleInputKeyDown: function () {
+    handleInputKeyDown: function() {
       if (this.text) {
         this.$emit("add-todo", this.text);
         this.text = "";
       }
     },
-    handleToggle: function () {
-      this.$emit("toggle-all-todos");
-    },
-  },
+    handleToggle: function() {
+      this.$emit("toggle-all-todos", !this.allCompleted);
+    }
+  }
 };
 </script>
 
@@ -62,7 +62,7 @@ export default {
   cursor: pointer;
   flex-shrink: 0;
 }
-.itemIconHide{
+.itemIconHide {
   background-image: none;
 }
 .itemIconChecked {
