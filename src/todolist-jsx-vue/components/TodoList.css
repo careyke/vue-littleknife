@@ -1,0 +1,136 @@
+.todolist {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
+  margin: 16px 0;
+  background-color: #ffffff;
+}
+.list {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+.todoHeader {
+  display: flex;
+  height: 50px;
+  flex-shrink: 0;
+  border-bottom: 1px solid #afafaf;
+}
+.itemIcon {
+  display: flex;
+  background-image: url("../../images/check.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  width: 50px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.itemIconHide {
+  background-image: none;
+}
+.itemIconChecked {
+  background-image: url("../../images/checked.png");
+}
+.todoInput {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+}
+.input {
+  flex-grow: 1;
+  height: 40px;
+  font-size: 16px;
+}
+
+.item {
+  display: flex;
+  border-bottom: 1px solid #afafaf;
+  height: 50px;
+}
+.item:hover img {
+  display: inline-block !important;
+}
+.itemText {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  flex-grow: 1;
+}
+.itemTextChecked {
+  text-decoration: line-through;
+  color: #d9d9d9;
+}
+.close {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.close > img {
+  display: none;
+}
+
+.todoFooter {
+  display: flex;
+  height: 50px;
+  position: relative;
+  border-top: 1px solid #afafaf;
+  position: relative;
+}
+.todoFooter::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 50px;
+  overflow: hidden;
+  pointer-events: none;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 8px 0 -3px #f6f6f6,
+    0 9px 1px -3px rgba(0, 0, 0, 0.2), 0 16px 0 -6px #f6f6f6,
+    0 17px 2px -6px rgba(0, 0, 0, 0.2);
+}
+.left {
+  display: flex;
+  padding: 0 8px;
+  align-items: center;
+  flex-shrink: 0;
+}
+.right {
+  display: none;
+  padding: 0 8px;
+  align-items: center;
+  cursor: pointer;
+  width: 120px;
+  justify-content: center;
+  flex-shrink: 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+}
+.rightActive {
+  display: flex;
+}
+.right:hover {
+  color: rgba(175, 47, 47);
+}
+.center {
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: center;
+  margin-right: 120px;
+}
+.tabItem {
+  padding: 4px 8px;
+  border: 1px solid transparent;
+  margin: 0 8px;
+  cursor: pointer;
+}
+.activeTab {
+  border-color: rgba(175, 47, 47, 0.2);
+}

@@ -10,7 +10,7 @@ module.exports = merge(baseConfig, {
     contentBase: '../dist',
     hot: true,
     open: true,
-    openPage: '/todolist-single-vue/index.html'
+    openPage: 'todolist-single-vue/index.html'
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin()

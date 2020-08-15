@@ -47,13 +47,13 @@ module.exports = {
     publicPath: ''
   },
   resolve: {
-    extensions: ['.js', '.vue'],
+    extensions: ['.js', '.vue', '.jsx'],
     mainFields: ['main']
   },
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         loader: "babel-loader",
         include: SRC_PATH,
       },
@@ -67,7 +67,7 @@ module.exports = {
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
-            options:{
+            options: {
               hmr: isDev
             }
           },
